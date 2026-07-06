@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.CategoryMapper">
+    <select id="selectAll" resultType="com.shop.domain.Category">
+        SELECT id,category_name FROM category
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO category(category_name) VALUES(#{categoryName})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update">
+        UPDATE category SET category_name=#{categoryName} WHERE id=#{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteById">
+        DELETE FROM category WHERE id=#{id}
+    </delete>
+</mapper>

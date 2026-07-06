@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f6f9f8 !important;
+  font-family: "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 14px;
+  color: #2c3e36 !important;
+}
+
+.el-card {
+  border-radius: 0px !important;
+  box-shadow: 0 3px 20px 0 rgba(44, 62, 54, 0.07) !important;
+  border: 0 !important;
+  background: #ffffff !important;
+}
+.el-card__header {
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  padding: 18px 26px !important;
+  border-bottom: 1px solid #e9efed !important;
+  border-radius: 0 !important;
+}
+.el-card__body {
+  padding: 18px 26px !important;
+  border-radius: 0 !important;
+}
+
+// 页面主体底色
+.el-main {
+  padding: 30px 34px !important;
+  background-color: #f6f9f8 !important;
+}
+
+// 顶部栏
+.el-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e9e7 !important;
+}
+
+// 表格直角
+.el-table {
+  margin-top: 14px !important;
+  border-radius: 0px !important;
+  overflow: hidden !important;
+}
+.el-table th {
+  background-color: #f0f5f3 !important;
+  color: #3a5247 !important;
+  border-radius: 0 !important;
+}
+.el-table td {
+  border-radius: 0 !important;
+}
+.el-table__row--striped {
+  background-color: #f6f9f8 !important;
+}
+
+// 按钮全局直角
+.el-button {
+  border-radius: 0px !important;
+}
+.el-button--primary {
+  background-color: #3a7d5c !important;
+  border-color: #3a7d5c !important;
+}
+.el-button--success {
+  background-color: #68a97e !important;
+  border-color: #68a97e !important;
+}
+.el-button--danger {
+  background-color: #c9655c !important;
+  border-color: #c9655c !important;
+}
+
+// 文本域
+.el-textarea__inner {
+  border-radius: 0px !important;
+  border: 1px solid #dde6e1 !important;
+}
+
+// 聚焦边框色
+.el-input__inner:focus,
+.el-select .el-input__inner:focus,
+.el-textarea__inner:focus {
+  border-color: #3a7d5c !important;
+  box-shadow: 0 0 0 2px rgba(58, 125, 92, 0.12) !important;
+}
+
+// 弹窗直角
+.el-dialog {
+  border-radius: 5px !important;
+}
+.el-dialog__header, .el-dialog__body, .el-dialog__footer {
+  border-radius: 5 !important;
+}
+
+// 面包屑
+.el-breadcrumb__item__inner {
+  color: #647c70 !important;
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__item__inner {
+  color: #2c3e36 !important;
+  font-weight: 500 !important;
+}
+
+// 链接主题色
+.el-link--primary {
+  color: #3a7d5c !important;
+}

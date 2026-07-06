@@ -1,0 +1,22 @@
+# 后端 shop-backed
+shop-backed/.idea/
+shop-backed/*.log
+shop-backed/logs/
+
+# 前端 shop-front
+shop-front/dist/
+shop-front/dist-ssr/
+shop-front/*.local
+shop-front/.idea/
+shop-front/logs/
+shop-front/*.log
+shop-front/npm-debug.log*
+shop-front/yarn-debug.log*
+shop-front/pnpm-debug.log*
+
+# 系统通用垃圾文件
+.DS_Store
+*.suo
+*.sw?
+*.tmp
+*.bak
