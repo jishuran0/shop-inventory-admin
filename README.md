@@ -3,6 +3,7 @@
 
 ## 一、项目目录结构
 
+'''
 shop-inventory-admin/
 ├─ shop-front # Vue3 前端项目
 │ ├─ public
@@ -90,7 +91,7 @@ shop-inventory-admin/
 │
 ├─ .gitignore # 全局文件过滤配置
 └─ README.md # 项目说明文档
-
+'''
 
 ## 二、技术栈
 ### 前端 shop-front
