@@ -92,6 +92,7 @@ shop-inventory-admin/
 ```bash
 cd shop-front
 npm install
+npm install echarts xlsx
 npm run dev
 ```
 

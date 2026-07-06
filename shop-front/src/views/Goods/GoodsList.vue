@@ -7,13 +7,29 @@
       <el-button type="primary" style="background:#3a7d5c;border:none" @click="handleMultiSearch">筛选查询</el-button>
       <el-button @click="resetSearch">清空筛选</el-button>
       <el-button type="success" style="background:#5a9976;border:none" @click="$router.push('/admin/goods/add')">添加新商品</el-button>
+      <el-button type="primary" style="background:#409eff;border:none" @click="handleExportExcel">导出Excel</el-button>
     </div>
     <!-- 商品表格 -->
     <el-table :data="goodsStore.goodsList" border style="width:100%">
       <el-table-column label="序号" type="index" width="70" align="center"/>
       <el-table-column label="商品名称" prop="goodsName"/>
       <el-table-column label="售价" prop="goodsPrice"/>
-      <el-table-column label="库存数量" prop="goodsStock"/>
+      <el-table-column label="库存数量" prop="goodsStock" width="110">
+        <template #default="scope">
+          <span :style="{
+            color: scope.row.goodsStock < 50 ? '#f56c6c' : '#333',
+            fontWeight: scope.row.goodsStock < 50 ? 'bold' : 'normal'
+          }">
+            {{ scope.row.goodsStock }}
+            <el-tag v-if="scope.row.goodsStock < 50" type="danger" size="small" style="margin-left:4px">
+              ⚠️ 库存不足
+            </el-tag>
+            <el-tag v-else-if="scope.row.goodsStock < 100" type="warning" size="small" style="margin-left:4px">
+              库存偏低
+            </el-tag>
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="商品描述" prop="goodsDesc"/>
       <el-table-column label="所属分类" prop="categoryName"/>
       <el-table-column label="操作" width="180" align="center">
@@ -64,6 +80,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { useGoodsStore } from '../../store/useGoods'
 import { multiSearchGoods, delGoods, updateGoods } from '../../api/goods'
 import { getCateAll } from '../../api/category'
+import * as XLSX from 'xlsx'
 
 const router = useRouter()
 const goodsStore = useGoodsStore()
@@ -131,5 +148,21 @@ const handleDelete = async (id) => {
   } catch(err) {
     ElMessage.info('取消删除或请求异常')
   }
+}
+// 导出 Excel
+const handleExportExcel = () => {
+  const data = goodsStore.goodsList.map((item, index) => ({
+    '序号': index + 1,
+    '商品名称': item.goodsName,
+    '售价': item.goodsPrice,
+    '库存数量': item.goodsStock,
+    '商品描述': item.goodsDesc,
+    '所属分类': item.categoryName
+  }))
+  const ws = XLSX.utils.json_to_sheet(data)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, '商品列表')
+  XLSX.writeFile(wb, `商品列表_${new Date().toLocaleDateString()}.xlsx`)
+  ElMessage.success('导出成功')
 }
 </script>
