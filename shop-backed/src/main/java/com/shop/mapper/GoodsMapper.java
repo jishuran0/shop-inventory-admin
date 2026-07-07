@@ -10,4 +10,5 @@ public interface GoodsMapper {
     int updateGoods(Goods goods);
     int deleteGoods(Long id);
     List<Goods> selectMultiQuery(@Param("goodsName") String goodsName, @Param("categoryName") String categoryName);
+    int batchInsert(List<Goods> goodsList);
 }

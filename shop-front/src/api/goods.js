@@ -27,3 +27,7 @@ export function updateGoods(data) {
 export function delGoods(id) {
   return request({ url: `/goods/delete/${id}`, method: 'DELETE' })
 }
+// 批量导入
+export function batchAddGoods(data) {
+  return request({ url: '/goods/batchAdd', method: 'POST', data })
+}

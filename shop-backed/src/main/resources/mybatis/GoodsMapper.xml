@@ -81,4 +81,12 @@
             AND c.category_name LIKE #{likeCate}
         </if>
     </select>
+
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO goods(goods_name, goods_price, goods_stock, goods_desc, create_time, update_time, category_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.goodsName}, #{item.goodsPrice}, #{item.goodsStock}, #{item.goodsDesc}, #{item.createTime}, #{item.updateTime}, #{item.categoryId})
+        </foreach>
+    </insert>
 </mapper>

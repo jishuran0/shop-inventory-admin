@@ -38,4 +38,8 @@ public class GoodsServiceImpl implements GoodsService {
     public int deleteGoods(Long id) {
         return goodsMapper.deleteGoods(id);
     }
+    @Override
+    public int batchInsert(List<Goods> goodsList) {
+        return goodsMapper.batchInsert(goodsList);
+    }
 }

@@ -8,6 +8,8 @@
       <el-button @click="resetSearch">清空筛选</el-button>
       <el-button type="success" style="background:#5a9976;border:none" @click="$router.push('/admin/goods/add')">添加新商品</el-button>
       <el-button type="primary" style="background:#409eff;border:none" @click="handleExportExcel">导出Excel</el-button>
+      <el-button type="warning" style="background:#e6a23c;border:none" @click="$refs.uploadRef.click()">导入Excel</el-button>
+      <input type="file" ref="uploadRef" accept=".xlsx,.xls" style="display:none" @change="handleImportExcel" />
     </div>
     <!-- 商品表格 -->
     <el-table :data="goodsStore.goodsList" border style="width:100%">
@@ -78,7 +80,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useGoodsStore } from '../../store/useGoods'
-import { multiSearchGoods, delGoods, updateGoods } from '../../api/goods'
+import { multiSearchGoods, delGoods, updateGoods, batchAddGoods } from '../../api/goods'
 import { getCateAll } from '../../api/category'
 import * as XLSX from 'xlsx'
 
@@ -90,6 +92,7 @@ const editForm = ref({
   id: null, goodsName: '', goodsPrice: 0, goodsStock: 0, goodsDesc: '', categoryId: 1
 })
 const cateOptions = ref([])
+const categoryMap = ref({})
 
 // 加载分类下拉
 const loadCateOptions = async () => {
@@ -99,6 +102,11 @@ const loadCateOptions = async () => {
       label: cate.categoryName,
       value: cate.id
     }))
+    const map = {}
+    res.data.forEach(cate => {
+      map[cate.categoryName] = cate.id
+    })
+    categoryMap.value = map
   }
 }
 
@@ -164,5 +172,47 @@ const handleExportExcel = () => {
   XLSX.utils.book_append_sheet(wb, ws, '商品列表')
   XLSX.writeFile(wb, `商品列表_${new Date().toLocaleDateString()}.xlsx`)
   ElMessage.success('导出成功')
+}
+// 导入 Excel
+const handleImportExcel = async (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = async (e) => {
+    try {
+      const data = new Uint8Array(e.target.result)
+      const workbook = XLSX.read(data, { type: 'array' })
+      const sheet = workbook.Sheets[workbook.SheetNames[0]]
+      const json = XLSX.utils.sheet_to_json(sheet)
+
+      const goodsList = json.map(row => {
+        let categoryId = row['分类ID'] || row['categoryId']
+        if (!categoryId) {
+          const cateName = row['所属分类'] || row['categoryName'] || ''
+          categoryId = categoryMap.value[cateName.trim()] || 1
+        }
+        return {
+          goodsName: row['商品名称'] || row['goodsName'] || '',
+          goodsPrice: parseFloat(row['售价'] || row['goodsPrice']) || 0,
+          goodsStock: parseInt(row['库存数量'] || row['goodsStock']) || 0,
+          goodsDesc: row['商品描述'] || row['goodsDesc'] || '',
+          categoryId: parseInt(categoryId) || 1
+        }
+      })
+
+      const res = await batchAddGoods(goodsList)
+      if (res.code === 200) {
+        ElMessage.success(`成功导入 ${goodsList.length} 条商品数据`)
+        goodsStore.loadAllGoods()
+      } else {
+        ElMessage.error(res.msg || '导入失败')
+      }
+    } catch (err) {
+      ElMessage.error('文件解析失败，请检查Excel格式')
+    }
+  }
+  reader.readAsArrayBuffer(file)
+  event.target.value = ''
 }
 </script>

@@ -11,4 +11,5 @@ public interface GoodsService {
     int addGoods(Goods goods);
     int updateGoods(Goods goods);
     int deleteGoods(Long id);
+    int batchInsert(List<Goods> goodsList);
 }

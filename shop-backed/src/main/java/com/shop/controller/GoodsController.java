@@ -65,4 +65,18 @@ public class GoodsController {
         goodsService.deleteGoods(id);
         return Result.success("删除商品成功");
     }
+
+    // 批量新增商品
+    @PostMapping("/batchAdd")
+    public Result<String> batchAdd(@RequestBody List<Goods> goodsList) {
+        if (goodsList == null || goodsList.isEmpty()) {
+            return Result.fail("导入数据不能为空");  // ← 这里把 error 改成 fail
+        }
+        for (Goods goods : goodsList) {
+            goods.setCreateTime(LocalDateTime.now());
+            goods.setUpdateTime(LocalDateTime.now());
+        }
+        int count = goodsService.batchInsert(goodsList);
+        return Result.success("成功导入 " + count + " 条数据");
+    }
 }
