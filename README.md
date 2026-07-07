@@ -14,6 +14,8 @@
 
 - 🔐 **登录鉴权** — VueRouter 路由守卫 + Pinia 持久化存储登录态
 - 📦 **三核心模块** — 管理员、商品、分类的完整增删改查
+- 📊 **数据可视化** — ECharts 实现 Dashboard 看板（饼图+柱状图）
+- 📤 **Excel 批量导入导出** — 支持商品数据快速录入与备份迁移
 - 🔍 **高级检索** — 多条件联合搜索 + 分页展示
 - 💬 **统一请求封装** — Axios 拦截器自动携带 Token 并统一处理异常
 - ⚡ **性能优化** — 路由懒加载 + 通用组件复用
@@ -127,5 +129,5 @@ ShopBackedApplication.java
 
 ## 📄 许可证
 
-[MIT](https://choosealicense.com/licenses/mit/) © your-name
+本项目使用 [MIT License](https://opensource.org/licenses/MIT) 开源协议。
 ```
